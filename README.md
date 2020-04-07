@@ -1,3 +1,4 @@
+# NO USAR!! ACTUALMENTE EN DESAROLLO!!!
 
 # react-native-mercado-pago-checkout-v4
 
