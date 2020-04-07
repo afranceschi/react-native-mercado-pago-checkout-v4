@@ -6,7 +6,7 @@
 //  Copyright © 2020 Facebook. All rights reserved.
 //
 #import "RNMercadoPagoCheckoutV4.h"
-#import "AppDelegate.h"
+//#import "AppDelegate.h"
 
 @import MercadoPagoSDK;
 
@@ -16,8 +16,9 @@
 
 @implementation RNMercadoPagoCheckoutV4
 {
-  UINavigationController *_nav;
-  BOOL _hasListeners;
+    UINavigationController *_nav;
+    BOOL _hasListeners;
+    NSString* _publicKey;
 }
 
 RCT_EXPORT_MODULE()
@@ -37,16 +38,22 @@ RCT_EXPORT_MODULE()
   _hasListeners = NO;
 }
 
+RCT_EXPORT_METHOD(setPublicKey: (NSString *)publicKey){
+    _publicKey = publicKey;
+}
+
 RCT_EXPORT_METHOD(open: (RCTPromiseResolveBlock)resolve
 rejecter:(RCTPromiseRejectBlock)reject){
   
   dispatch_async(dispatch_get_main_queue(), ^{
     
     
-    AppDelegate *share = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    self->_nav = (UINavigationController *) share.window.rootViewController;
+    //AppDelegate *share = (AppDelegate *)[UIApplication sharedApplication].delegate;
+    //self->_nav = (UINavigationController *) share.window.rootViewController;
+      
+    self->_nav = (UINavigationController *) [UIApplication sharedApplication].keyWindow.rootViewController;
     
-    MercadoPagoCheckoutBuilder *MPCB = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey: @"TEST-aeea73ab-d2c2-4e96-93b9-85c0b07e82e4" preferenceId: @"99362128-14e0b380-82da-43be-8e4d-62bd275ef72c"];
+      MercadoPagoCheckoutBuilder *MPCB = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey: self->_publicKey preferenceId: @"99362128-14e0b380-82da-43be-8e4d-62bd275ef72c"];
     
     MercadoPagoCheckout *MPC = [[MercadoPagoCheckout alloc] initWithBuilder:MPCB];
     

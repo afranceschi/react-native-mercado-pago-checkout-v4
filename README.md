@@ -1,26 +1,39 @@
 # NO USAR!! ACTUALMENTE EN DESAROLLO!!!
 
+# DO NOT USE!! CURRENTLY IN DEVELOPMENT!!!
+
 # react-native-mercado-pago-checkout-v4
 
 ## Getting started
 
-`$ npm install react-native-mercado-pago-checkout-v4 --save`
+`$ npm install react-native-mercado-pago-checkout-v4-test --save`
 
-### Mostly automatic installation
+### Or
 
-`$ react-native link react-native-mercado-pago-checkout-v4`
+`$ yarn add react-native-mercado-pago-checkout-v4-test`
 
-### Manual installation
+### Config
 
 
 #### iOS
+Remplace this line in AppDelegate.m:
 
-1. In XCode, in the project navigator, right click `Libraries` ➜ `Add Files to [your project's name]`
-2. Go to `node_modules` ➜ `react-native-mercado-pago-checkout-v4` and add `RNMercadoPagoCheckoutV4.xcodeproj`
-3. In XCode, in the project navigator, select your project. Add `libRNMercadoPagoCheckoutV4.a` to your project's `Build Phases` ➜ `Link Binary With Libraries`
-4. Run your project (`Cmd+R`)<
+```objective c
+self.window.rootViewController = rootViewController;
+```
 
-#### Android
+For this:
+
+```objective c
+UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:rootViewController];
+  
+[navController setToolbarHidden:YES animated:YES];
+[navController setNavigationBarHidden:YES];
+
+self.window.rootViewController = navController;
+```
+
+#### Android (NOT WORK YET!)
 
 1. Open up `android/app/src/main/java/[...]/MainActivity.java`
   - Add `import com.reactlibrary.RNMercadoPagoCheckoutV4Package;` to the imports at the top of the file
@@ -41,6 +54,6 @@
 import RNMercadoPagoCheckoutV4 from 'react-native-mercado-pago-checkout-v4';
 
 // TODO: What to do with the module?
-RNMercadoPagoCheckoutV4;
+RNMercadoPagoCheckoutV4.open();
 ```
   
