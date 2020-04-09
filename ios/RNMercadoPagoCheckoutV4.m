@@ -17,8 +17,12 @@
 @implementation RNMercadoPagoCheckoutV4
 {
     UINavigationController *_nav;
+    
     BOOL _hasListeners;
+    BOOL _navigationBarHidden;
+    
     NSString* _publicKey;
+    NSString* _preferenceId;
 }
 
 RCT_EXPORT_MODULE()
@@ -42,6 +46,10 @@ RCT_EXPORT_METHOD(setPublicKey: (NSString *)publicKey){
     _publicKey = publicKey;
 }
 
+RCT_EXPORT_METHOD(setPreferenceId: (NSString *)preferenceId){
+    _preferenceId = preferenceId;
+}
+
 RCT_EXPORT_METHOD(open: (RCTPromiseResolveBlock)resolve
 rejecter:(RCTPromiseRejectBlock)reject){
   
@@ -53,10 +61,11 @@ rejecter:(RCTPromiseRejectBlock)reject){
       
     self->_nav = (UINavigationController *) [UIApplication sharedApplication].keyWindow.rootViewController;
     
-      MercadoPagoCheckoutBuilder *MPCB = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey: self->_publicKey preferenceId: @"99362128-14e0b380-82da-43be-8e4d-62bd275ef72c"];
+      MercadoPagoCheckoutBuilder *MPCB = [[MercadoPagoCheckoutBuilder alloc] initWithPublicKey: self->_publicKey preferenceId: self->_preferenceId];
     
     MercadoPagoCheckout *MPC = [[MercadoPagoCheckout alloc] initWithBuilder:MPCB];
-    
+     
+    self->_navigationBarHidden = self->_nav.navigationBarHidden;
     [self->_nav setNavigationBarHidden:FALSE];
     [self->_nav popToRootViewControllerAnimated:NO];
     
@@ -69,16 +78,18 @@ rejecter:(RCTPromiseRejectBlock)reject){
 }
 
 - (void (^ _Nullable)(void))cancelCheckout {
-    [self->_nav setNavigationBarHidden:TRUE];
-    if (_hasListeners) {
-      [self sendEventWithName:@"checkout" body:@{ @"status": @"CANCEL" }];
-    }
-    printf("CANCEL\n");
-    return nil;
+    [self->_nav setNavigationBarHidden:self->_navigationBarHidden];
+    return ^{
+        if (self->_hasListeners) {
+          [self sendEventWithName:@"checkout" body:@{ @"status": @"CANCEL" }];
+        }
+        printf("CANCEL\n");
+        [self->_nav popToRootViewControllerAnimated:YES];
+    };
 }
 
 - (void (^ _Nullable)(id<PXResult> _Nullable))finishCheckout {
-  [self->_nav setNavigationBarHidden:TRUE];
+  [self->_nav setNavigationBarHidden:self->_navigationBarHidden];
   return ^(id<PXResult>  _Nullable result){
     PXGenericPayment *pago = (PXGenericPayment *) result;
     NSLog(@"PaymentID: %@",pago.paymentId);
