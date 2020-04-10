@@ -10,5 +10,5 @@ export default {
     setPreferenceId: preferenceId => RNMercadoPagoCheckoutV4.setPreferenceId(preferenceId),
     open: () => RNMercadoPagoCheckoutV4.open(),
     addListener: func => events.addListener("checkout", func),
-    remove: () => events.removeAllListeners()
+    remove: () => events.removeAllListeners("checkout")
 }
