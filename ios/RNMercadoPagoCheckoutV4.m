@@ -58,6 +58,14 @@ rejecter:(RCTPromiseRejectBlock)reject){
     
     //AppDelegate *share = (AppDelegate *)[UIApplication sharedApplication].delegate;
     //self->_nav = (UINavigationController *) share.window.rootViewController;
+
+    if([self->_publicKey length] == 0){
+        self->_publicKey = @"null";
+    }
+
+    if([self->_preferenceId length] == 0){
+        self->_preferenceId = @"null";
+    }
       
     self->_nav = (UINavigationController *) [UIApplication sharedApplication].keyWindow.rootViewController;
     
