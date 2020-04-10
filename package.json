@@ -1,6 +1,6 @@
 {
   "name": "react-native-mercadopago-checkout-v4",
-  "version": "0.1.7",
+  "version": "0.2.7",
   "description": "Bridge to MercadoPagoSDK",
   "main": "index.js",
   "homepage": "https://github.com/afranceschi/react-native-mercado-pago-checkout-v4",
