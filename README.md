@@ -4,6 +4,8 @@
 
 # react-native-mercado-pago-checkout-v4
 
+### React version: 0.61.5
+
 ## Getting started
 
 `$ npm install react-native-mercado-pago-checkout-v4-test --save`
@@ -16,6 +18,13 @@
 
 
 #### iOS
+
+Add this line in ios/Podfile before "target <PROJECT_NAME> do":
+
+```objective c
+use_frameworks!
+```
+
 Remplace this line in AppDelegate.m:
 
 ```objective c
