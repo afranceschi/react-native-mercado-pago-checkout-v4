@@ -63,6 +63,8 @@ self.window.rootViewController = navController;
 import RNMercadoPagoCheckoutV4 from 'react-native-mercado-pago-checkout-v4';
 
 // TODO: What to do with the module?
+RNMercadoPagoCheckoutV4.setPublicKey("public_key");
+RNMercadoPagoCheckoutV4.setPreferenceId("preference_id");
 RNMercadoPagoCheckoutV4.open();
 ```
   
